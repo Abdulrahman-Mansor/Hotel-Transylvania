@@ -12,7 +12,7 @@ public class Main extends javax.swing.JFrame {
             this.sidePanel2.getDestY();
             this.sidePanel2.setCardAndCenterPanel(centerPanel2.card, centerPanel2, this);
     }
-
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
