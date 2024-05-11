@@ -32,7 +32,7 @@ public class LogInFrame extends javax.swing.JFrame {
         passwordText.setLineColor(theme);
         loginButton.setBackground(theme);
         loginButton.setOpaque(false);
-        loginButton.setRound(15);
+        loginButton.setRound(30);
         loginButton.setRippleColor(Color.white);
         loginButton.setShadowColor(Color.gray);
         loginButton.setForeground(new Color(255, 239, 241));
