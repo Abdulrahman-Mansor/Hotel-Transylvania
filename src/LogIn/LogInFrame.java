@@ -120,7 +120,8 @@ public class LogInFrame extends javax.swing.JFrame {
             PreparedStatement pst = conn.prepareStatement(sqlQuery);
             ResultSet result = pst.executeQuery();
             if(!result.next()){
-                JOptionPane.showMessageDialog(null,"Username and Password is incrorrect");
+//                JOptionPane.showMessageDialog(null,"Username and Password is incrorrect");
+                new MessageDialog("Username and Password is incorrect!", this).setVisible(true);
             }
             else{
                 new main.Main().setVisible(true);
