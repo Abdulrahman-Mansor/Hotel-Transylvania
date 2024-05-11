@@ -14,8 +14,8 @@ import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
 public class LogInFrame extends javax.swing.JFrame {
-    Color theme = new Color(190,104,255);
-//    Color theme = new Color(90, 174, 69);
+//    Color theme = new Color(190,104,255);
+    Color theme = new Color(90, 174, 69);
     public LogInFrame() {
         initComponents();
         init();
