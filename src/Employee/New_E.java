@@ -8,6 +8,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import javax.swing.JOptionPane;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 /**
  *
@@ -20,6 +21,21 @@ public class New_E extends javax.swing.JFrame {
      */
     public New_E() {
         initComponents();
+        ResultSet rs ;
+        String sqlqurey = "SELECT * FROM dbo.Department";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            java.sql.Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            java.sql.PreparedStatement pst = con.prepareStatement(sqlqurey);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                D.addItem(rs.getString("DName"));
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
     }
 
     /**
@@ -40,7 +56,6 @@ public class New_E extends javax.swing.JFrame {
         D = new combobox.Combobox();
         button1 = new button.Button();
         jLabel1 = new javax.swing.JLabel();
-        i = new textfield.TextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(450, 200));
@@ -79,8 +94,6 @@ public class New_E extends javax.swing.JFrame {
         });
 
         D.setLabeText("Department");
-        D.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Maintance","Hous Keeping","Restaurant" }));
-        D.setSelectedIndex(0);
         D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DActionPerformed(evt);
@@ -98,9 +111,6 @@ public class New_E extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Adding Employee");
 
-        i.setText("");
-        i.setLabelText("ID");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -116,21 +126,19 @@ public class New_E extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(8, 75, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Fn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(119, 119, 119)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(P, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Sn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(D, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(S, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Fn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(G, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(119, 119, 119)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(P, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Sn, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(D, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(S, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(92, 92, 92))
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,9 +146,7 @@ public class New_E extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addComponent(i, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Fn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Sn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,8 +183,24 @@ public class New_E extends javax.swing.JFrame {
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
         // TODO add your handling code here:
+        String DN =(String) D.getSelectedItem();
+        ResultSet rs ;
+        int dn=1;
+        String sqlqureyy = "SELECT DID FROM dbo.Department where DNAME = '"+DN+"' ";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            java.sql.Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            java.sql.PreparedStatement pst = con.prepareStatement(sqlqureyy);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                dn = rs.getInt("DID");
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
         String sqlqurey = "INSERT INTO dbo.Employee (\n" +
-                            "    ID,\n" +
                             "    FirstName,\n" +
                             "    LastName,\n" +
                             "    Phone,\n" +
@@ -188,11 +210,10 @@ public class New_E extends javax.swing.JFrame {
                             ")\n" +
                             "VALUES\n" +
                             "    (\n" +
-                            "        "+Integer.parseInt(i.getText())+",\n" +
                             "        '"+Fn.getText()+"',\n" +
                             "        '"+Sn.getText()+"',\n" +
                             "        '"+P.getText()+"',\n" +
-                            "        "+(D.getSelectedIndex()+1)+",\n" +
+                            "        "+dn+",\n" +
                             "        "+Float.parseFloat(S.getText())+",\n" +
                             "        "+G.getSelectedIndex()+"\n" +
                             "    );";
@@ -266,7 +287,6 @@ public class New_E extends javax.swing.JFrame {
     private textfield.TextField S;
     private textfield.TextField Sn;
     private button.Button button1;
-    private textfield.TextField i;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

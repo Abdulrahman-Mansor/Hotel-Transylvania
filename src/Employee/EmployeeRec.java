@@ -54,12 +54,13 @@ public class EmployeeRec extends CenterPanelChildForm {
         }
 
         setMinimumSize(new java.awt.Dimension(908, 602));
+        setPreferredSize(new java.awt.Dimension(926, 620));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("ID                              Name                          Department                      Phone Number               Gender                            Edit          Delete ");
+        jLabel2.setText("         ID                           Name                           Department                    Phone Number               Gender                        Edit          Delete ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,7 +130,7 @@ public class EmployeeRec extends CenterPanelChildForm {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(e_Scroll2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGap(0, 41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

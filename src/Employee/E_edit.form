@@ -176,7 +176,7 @@
         </Component>
         <Component class="combobox.Combobox" name="D">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="D.setLabeText(&quot;Department&quot;);&#xa;D.setModel(new javax.swing.DefaultComboBoxModel(new String[] { &quot;Maintance&quot;,&quot;Hous Keeping&quot;,&quot;Restaurant&quot; }));&#xa;D.setSelectedIndex(dep);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="D.setLabeText(&quot;Department&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="textfield.TextField" name="S">

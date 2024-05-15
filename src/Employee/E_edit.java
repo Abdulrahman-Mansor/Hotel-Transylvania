@@ -7,6 +7,7 @@ package Employee;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +28,22 @@ public class E_edit extends javax.swing.JFrame {
     public E_edit(int ID,String Fname,String Lname,float Salary,String Phonen,boolean gender,int DEP) {
         this.ID=ID ;this.Fname=Fname; this.Lname=Lname; this.Salary=Salary; this.Phonen=Phonen; this.gender=gender; this.dep=DEP;
         initComponents();
+        ResultSet rs ;
+        String sqlqurey = "SELECT * FROM dbo.Department";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            java.sql.Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            java.sql.PreparedStatement pst = con.prepareStatement(sqlqurey);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                D.addItem(rs.getString("DName"));
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        D.setSelectedIndex(DEP-1);
     }
 
     /**
@@ -79,8 +96,6 @@ public class E_edit extends javax.swing.JFrame {
         P.setLabelText("Phone Number");
 
         D.setLabeText("Department");
-        D.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Maintance","Hous Keeping","Restaurant" }));
-        D.setSelectedIndex(dep);
 
         S.setText(Float.toString(Salary));
         S.setLabelText("Salary");
@@ -178,13 +193,24 @@ public class E_edit extends javax.swing.JFrame {
         String Second = Sn.getText();
         String Phon = P.getText();
         float Sala = Float.parseFloat(S.getText());
-        boolean Gen;
-        if(G.getSelectedIndex()==0){
-            Gen = true;
+        String department = (String)D.getSelectedItem();
+        ResultSet rs ;
+        int dn=1;
+        String sqlqureyy = "SELECT DID FROM dbo.Department where DNAME = '"+department+"' ";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            java.sql.Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            java.sql.PreparedStatement pst = con.prepareStatement(sqlqureyy);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                dn = rs.getInt("DID");
+            }
+            
         }
-        else{ Gen = false;}
-        int department = D.getSelectedIndex();
-        String sqlqurey = "UPDATE dbo.Employee SET FirstName = '"+first+"',LastName = '"+Second+"',Phone = '"+Phon+"',DID = "+department+",Salary = "+Sala+",Gender = "+G.getSelectedIndex()+" WHERE ID = "+ID+" ";
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        String sqlqurey = "UPDATE dbo.Employee SET FirstName = '"+first+"',LastName = '"+Second+"',Phone = '"+Phon+"',DID = "+dn+",Salary = "+Sala+",Gender = "+G.getSelectedIndex()+" WHERE ID = "+ID+" ";
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");

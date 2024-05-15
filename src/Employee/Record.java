@@ -20,10 +20,11 @@ public class Record extends JPanel {
     private String Fname,Lname,Phonee,Namee;
     private float Salary;
     private boolean gender;
+    private String DName;
     private String s[] ={ "Maintance","Hous Keeping","Restaurant","Department 4" };
-    public Record(int ID,String Fname,String Lname,int Dep,String Phone,float Salary,boolean gender) {
+    public Record(int ID,String Fname,String Lname,int Dep,String Phone,float Salary,boolean gender,String DName) {
         this.id=ID; this.Dep=Dep; this.Phonee=Phone; this.Salary=Salary; this.Fname=Fname; this.Lname=Lname; this.gender=gender;
-        this.Namee=Fname+" "+Lname;
+        this.Namee=Fname+" "+Lname; this.DName=DName;
         initComponents();
     }
 
@@ -53,7 +54,7 @@ public class Record extends JPanel {
 
         ID.setText(Integer.toString(id));
 
-        Department.setText(s[Dep-1]);
+        Department.setText(DName);
 
         Phone.setText(Phonee);
 
@@ -103,11 +104,11 @@ public class Record extends JPanel {
                 .addComponent(Phone)
                 .addGap(58, 58, 58)
                 .addComponent(Gender)
-                .addGap(61, 61, 61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(edit)
-                .addGap(26, 26, 26)
+                .addGap(39, 39, 39)
                 .addComponent(delete)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -4,6 +4,7 @@
  */
 package Employee;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -41,9 +42,14 @@ public class E_Scroll extends javax.swing.JPanel {
         jScrollPane1 = new raven.scroll.win11.ScrollPaneWin11();
         String sqlqurey;
         if (index == 0) {
-            sqlqurey = "SELECT * FROM dbo.Employee";
+            sqlqurey = "SELECT Employee.*, Department.DName\n" +
+                        "FROM Employee\n" +
+                        "JOIN Department ON Employee.DID = Department.DID";
         } else {
-            sqlqurey = "SELECT * FROM dbo.Employee WHERE DID = " + index;
+            sqlqurey = "SELECT Employee.*, Department.DName\n" +
+                        "FROM Employee\n" +
+                        "JOIN Department ON Employee.DID = Department.DID\n" +
+                        " WHERE Employee.DID = " + index+" ";
         }
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -67,20 +73,23 @@ public class E_Scroll extends javax.swing.JPanel {
                 boolean gen = rs.getBoolean("Gender");
                 float Salary = rs.getFloat("Salary");
                 int Dep = rs.getInt("DID");
+                String deName = rs.getString("DName");
                 //System.out.println(Dep);
                 //System.out.println(Name);
-                Record r = new Record(ID, FName, SName, Dep, Phone, Salary, gen);
-                r.setPreferredSize(new Dimension(820, 50));
+                Record r = new Record(ID, FName, SName, Dep, Phone, Salary, gen,deName);
+                r.setPreferredSize(new Dimension(830, 50));
                 innerPanel.add(r);
                 JPanel subPanel = new JPanel();
-                subPanel.setPreferredSize(new Dimension(200, 10));
-                subPanel.setMaximumSize(new Dimension(200, 10));
-                subPanel.setMinimumSize(new Dimension(200, 10));
+                subPanel.setPreferredSize(new Dimension(750, 5));
+                subPanel.setMaximumSize(new Dimension(750, 5));
+                subPanel.setMinimumSize(new Dimension(750, 5));
+                subPanel.setBackground(new Color(135,135,135));
                 innerPanel.add(subPanel);
             }
         } catch (SQLException ex) {
             Logger.getLogger(E_Scroll.class.getName()).log(Level.SEVERE, null, ex);
         }
+        innerPanel.setBackground(new Color(255,255,255));
         jScrollPane1.setViewportView(innerPanel);
         add(jScrollPane1, BorderLayout.CENTER);
         System.out.println(cnt);
