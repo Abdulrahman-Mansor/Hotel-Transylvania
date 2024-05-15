@@ -30,88 +30,47 @@ public class E_Scroll extends javax.swing.JPanel {
     private JPanel innerPanel;
     private JScrollPane jScrollPane1;
     
-    public E_Scroll() throws SQLException {
-        initComponents();
-        this.setPreferredSize(new Dimension(830,500));
-        jScrollPane1 = new raven.scroll.win11.ScrollPaneWin11();
-        String sqlqurey = "SELECT * FROM dbo.Employee";
-        try{
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
-            PreparedStatement pst = con.prepareStatement(sqlqurey);
-            rs = pst.executeQuery();
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
-        }
-        innerPanel = new JPanel();
-        innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
-        int cnt=0;
-        try {
-            while(rs.next()){
-                cnt++;
-                String FName = rs.getString("FirstName");
-                String SName = rs.getString("LastName");
-                String Phone = rs.getString("Phone");
-                String Name = FName + " "+ SName;
-                int ID = rs.getInt("ID");
-                float Salary = rs.getFloat("Salary");
-                int Dep = rs.getInt("DID");
-                System.out.println(Name);
-                boolean gen = rs.getBoolean("Gender");
-                Record r = new Record(ID,FName,SName,Dep,Phone,Salary,gen);
-                r.setPreferredSize(new Dimension(820, 50));
-                innerPanel.add(r);
-                JPanel subPanel = new JPanel();
-                subPanel.setPreferredSize(new Dimension(200, 10));
-                innerPanel.add(subPanel);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(E_Scroll.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        jScrollPane1.setViewportView(innerPanel);
-        add(jScrollPane1, BorderLayout.CENTER);
-        System.out.println(cnt);
-    }
-    public void change(int index){
+    public void change(int index) {
         this.removeAll();
         initComponents();
-       //System.out.println(index);
-        this.remove(innerPanel);
+        //System.out.println(index);
+//        this.remove(innerPanel);
         this.revalidate();
         this.repaint();
-        this.setPreferredSize(new Dimension(830,500));
+        this.setPreferredSize(new Dimension(830, 500));
         jScrollPane1 = new raven.scroll.win11.ScrollPaneWin11();
         String sqlqurey;
-        if(index==0){ sqlqurey= "SELECT * FROM dbo.Employee";}
-        else { sqlqurey = "SELECT * FROM dbo.Employee WHERE DID = "+index;}
-        try{
+        if (index == 0) {
+            sqlqurey = "SELECT * FROM dbo.Employee";
+        } else {
+            sqlqurey = "SELECT * FROM dbo.Employee WHERE DID = " + index;
+        }
+        try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
             PreparedStatement pst = con.prepareStatement(sqlqurey);
             rs = pst.executeQuery();
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         innerPanel = new JPanel();
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
-        int cnt=0;
+        int cnt = 0;
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 cnt++;
                 String FName = rs.getString("FirstName");
                 String SName = rs.getString("LastName");
                 String Phone = rs.getString("Phone");
-                String Name = FName + " "+ SName;
+                String Name = FName + " " + SName;
                 int ID = rs.getInt("ID");
                 boolean gen = rs.getBoolean("Gender");
                 float Salary = rs.getFloat("Salary");
                 int Dep = rs.getInt("DID");
                 //System.out.println(Dep);
                 //System.out.println(Name);
-                Record r = new Record(ID,FName,SName,Dep,Phone,Salary,gen);
-                r.setPreferredSize(new Dimension(820, 50));               
+                Record r = new Record(ID, FName, SName, Dep, Phone, Salary, gen);
+                r.setPreferredSize(new Dimension(820, 50));
                 innerPanel.add(r);
                 JPanel subPanel = new JPanel();
                 subPanel.setPreferredSize(new Dimension(200, 10));
@@ -125,8 +84,14 @@ public class E_Scroll extends javax.swing.JPanel {
         jScrollPane1.setViewportView(innerPanel);
         add(jScrollPane1, BorderLayout.CENTER);
         System.out.println(cnt);
-        
+
     }
+    
+    public E_Scroll() throws SQLException {
+        initComponents();
+        change(0);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

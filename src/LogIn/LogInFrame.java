@@ -116,7 +116,7 @@ public class LogInFrame extends javax.swing.JFrame {
         String sqlQuery = "SELECT * FROM Admin where UserName ='" + username +"' AND Password ='" + password + "'";
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://MANSOUR:1433;databaseName=HotelTransviliana;encrypt=true;trustServerCertificate=true", "admin", "12345");
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://Mansour:1433;databaseName=Hotel Transylvania DB;encrypt=true;trustServerCertificate=true", "Mans", "12345");
             PreparedStatement pst = conn.prepareStatement(sqlQuery);
             ResultSet result = pst.executeQuery();
             if(!result.next()){
@@ -125,6 +125,7 @@ public class LogInFrame extends javax.swing.JFrame {
             }
             else{
                 new main.Main().setVisible(true);
+                this.setVisible(false);
             }
         }catch (Exception ex) {
             System.out.println("Class sql server not found");

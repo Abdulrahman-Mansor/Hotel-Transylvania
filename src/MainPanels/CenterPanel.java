@@ -1,11 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package MainPanels;
 
+import Employee.EmployeeRec;
 import java.awt.CardLayout;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import services.ServicesPanel;
 
 public class CenterPanel extends javax.swing.JPanel {
 
@@ -21,8 +23,12 @@ public class CenterPanel extends javax.swing.JPanel {
         card = new CardLayout();
         this.setLayout(card);
 //        this.add(new CenterPanelChildForm(),"1");
-        this.add(new CenterPanelChildForm(), "0");
-        this.add(new CenterPanelChildForm(), "1");
+        this.add(new ServicesPanel(), "0");
+        try {
+            this.add(new EmployeeRec(), "1");
+        } catch (SQLException ex) {
+            Logger.getLogger(CenterPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.add(new CenterPanelChildForm(), "2");
         this.add(new CenterPanelChildForm(), "3");
         card.show(this, "0");

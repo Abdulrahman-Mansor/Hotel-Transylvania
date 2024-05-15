@@ -28,7 +28,6 @@ public class MessageDialog extends javax.swing.JFrame {
         okButton = new button.Button();
         messageLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setOpacity(0.9F);
 

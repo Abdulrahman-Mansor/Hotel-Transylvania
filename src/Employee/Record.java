@@ -20,7 +20,7 @@ public class Record extends JPanel {
     private String Fname,Lname,Phonee,Namee;
     private float Salary;
     private boolean gender;
-    private String s[] ={ "Maintance","Hous Keeping","Restaurant" };
+    private String s[] ={ "Maintance","Hous Keeping","Restaurant","Department 4" };
     public Record(int ID,String Fname,String Lname,int Dep,String Phone,float Salary,boolean gender) {
         this.id=ID; this.Dep=Dep; this.Phonee=Phone; this.Salary=Salary; this.Fname=Fname; this.Lname=Lname; this.gender=gender;
         this.Namee=Fname+" "+Lname;
