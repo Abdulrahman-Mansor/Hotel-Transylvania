@@ -31,6 +31,23 @@ public class EmployeeRec extends CenterPanelChildForm {
     public EmployeeRec() throws SQLException  {
         
         initComponents();
+        ResultSet rs ;
+        DepartCombo.addItem("All");
+        String sqlqurey = "SELECT * FROM dbo.Department";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            java.sql.Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true","Admin","1234");
+            java.sql.PreparedStatement pst = con.prepareStatement(sqlqurey);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                DepartCombo.addItem(rs.getString("DName"));
+            }
+            
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,e);
+        }
+        DepartCombo.setSelectedIndex(0);
     }
 
     /**
@@ -79,7 +96,6 @@ public class EmployeeRec extends CenterPanelChildForm {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        DepartCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ALL","Maintance","Hous Keeping","Restaurant" }));
         DepartCombo.setLabeText("Depatment");
         DepartCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

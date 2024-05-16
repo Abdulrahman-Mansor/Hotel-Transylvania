@@ -115,7 +115,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DepartComboActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DepartCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { &quot;ALL&quot;,&quot;Maintance&quot;,&quot;Hous Keeping&quot;,&quot;Restaurant&quot; }));&#xa;DepartCombo.setLabeText(&quot;Depatment&quot;);"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DepartCombo.setLabeText(&quot;Depatment&quot;);"/>
       </AuxValues>
     </Component>
     <Component class="button.Button" name="button1">
