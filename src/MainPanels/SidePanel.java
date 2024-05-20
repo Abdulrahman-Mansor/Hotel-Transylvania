@@ -74,12 +74,13 @@ public class SidePanel extends javax.swing.JPanel {
         this.main = main;
     }
     public int[] getDestY() {
-        destY = new int[5];
+        destY = new int[6];
         destY[0] = homeItemPanel.getLocation().y;
         destY[1] = lessonsItemPanel.getLocation().y;
         destY[2] = statisticsItemPanel.getLocation().y;
         destY[3] = profileItemPanel.getLocation().y;
-        destY[4] = logoutItemPanel.getLocation().y;
+        destY[4] = suppliesItemPanel.getLocation().y;
+        destY[5] = logoutItemPanel.getLocation().y;
         startSel = destY[0];
         locSel = startSel;
         return destY;
@@ -116,6 +117,10 @@ public class SidePanel extends javax.swing.JPanel {
                 profileLabel.setForeground(Color.decode("#636363"));
                 break;
             case 4:
+                suppliesLabel.setIcon(new ImageIcon(getClass().getResource("/icons/supplies (1).png")));
+                suppliesLabel.setForeground(Color.decode("#636363"));
+                break;
+            case 5:
                 logoutLabel.setIcon(new ImageIcon(getClass().getResource("/icons/logout (2).png")));
                 logoutLabel.setForeground(Color.decode("#636363"));
                 break;
@@ -140,6 +145,8 @@ public class SidePanel extends javax.swing.JPanel {
         logoutItemPanel = new javax.swing.JPanel();
         logoutLabel = new javax.swing.JLabel();
         Selector = new javax.swing.JPanel();
+        suppliesItemPanel = new javax.swing.JPanel();
+        suppliesLabel = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -359,6 +366,42 @@ public class SidePanel extends javax.swing.JPanel {
             .addGap(0, 36, Short.MAX_VALUE)
         );
 
+        suppliesItemPanel.setOpaque(false);
+        suppliesItemPanel.setPreferredSize(new java.awt.Dimension(120, 36));
+        suppliesItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                suppliesItemPanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                suppliesItemPanelMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                suppliesItemPanelMousePressed(evt);
+            }
+        });
+
+        suppliesLabel.setFont(new java.awt.Font("Gill Sans Ultra Bold Condensed", 0, 24)); // NOI18N
+        suppliesLabel.setForeground(new java.awt.Color(99, 99, 99));
+        suppliesLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/supplies (1).png"))); // NOI18N
+        suppliesLabel.setIconTextGap(25);
+        suppliesLabel.setInheritsPopupMenu(false);
+
+        javax.swing.GroupLayout suppliesItemPanelLayout = new javax.swing.GroupLayout(suppliesItemPanel);
+        suppliesItemPanel.setLayout(suppliesItemPanelLayout);
+        suppliesItemPanelLayout.setHorizontalGroup(
+            suppliesItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(suppliesItemPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(suppliesLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        suppliesItemPanelLayout.setVerticalGroup(
+            suppliesItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, suppliesItemPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(suppliesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -374,7 +417,8 @@ public class SidePanel extends javax.swing.JPanel {
                     .addComponent(logo_label)
                     .addComponent(logoutItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(profileItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lessonsItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lessonsItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(suppliesItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -391,7 +435,9 @@ public class SidePanel extends javax.swing.JPanel {
                 .addComponent(statisticsItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(profileItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(suppliesItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 407, Short.MAX_VALUE)
                 .addComponent(logoutItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
@@ -431,7 +477,7 @@ public class SidePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lessonsItemPanelMouseEntered
 
     private void logoutItemPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutItemPanelMouseEntered
-        if (!selectedItem[4]) {
+        if (!selectedItem[5]) {
             logoutLabel.setIcon(new ImageIcon(getClass().getResource("/icons/logout (1).png")));
             logoutLabel.setForeground(Color.white);
         }
@@ -466,7 +512,7 @@ public class SidePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_profileItemPanelMouseExited
 
     private void logoutItemPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutItemPanelMouseExited
-        if (!selectedItem[4]) {
+        if (!selectedItem[5]) {
             logoutLabel.setIcon(new ImageIcon(getClass().getResource("/icons/logout (2).png")));
             logoutLabel.setForeground(Color.decode("#636363"));
         }
@@ -502,12 +548,35 @@ public class SidePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_profileItemPanelMousePressed
 
     private void logoutItemPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutItemPanelMousePressed
-        if (!selectedItem[4]) {
-            setSelectedItem(4);
+        if (!selectedItem[5]) {
+            setSelectedItem(5);
             logoutLabel.setIcon(new ImageIcon(getClass().getResource("/icons/logout (1).png")));
+            main.setVisible(false);
+            new LogIn.LogInFrame().setVisible(true);
         }
    
     }//GEN-LAST:event_logoutItemPanelMousePressed
+
+    private void suppliesItemPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_suppliesItemPanelMouseEntered
+        if (!selectedItem[4]) {
+            suppliesLabel.setIcon(new ImageIcon(getClass().getResource("/icons/supplies.png")));
+            suppliesLabel.setForeground(Color.white);
+        }
+    }//GEN-LAST:event_suppliesItemPanelMouseEntered
+
+    private void suppliesItemPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_suppliesItemPanelMouseExited
+        if (!selectedItem[4]) {
+            suppliesLabel.setIcon(new ImageIcon(getClass().getResource("/icons/supplies (1).png")));
+            suppliesLabel.setForeground(Color.decode("#636363"));
+        }
+    }//GEN-LAST:event_suppliesItemPanelMouseExited
+
+    private void suppliesItemPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_suppliesItemPanelMousePressed
+        if (!selectedItem[4]) {
+            setSelectedItem(4);
+            suppliesLabel.setIcon(new ImageIcon(getClass().getResource("/icons/supplies.png")));
+        }
+    }//GEN-LAST:event_suppliesItemPanelMousePressed
 
     @Override
     public void paint(Graphics g) {
@@ -536,8 +605,14 @@ public class SidePanel extends javax.swing.JPanel {
     private javax.swing.JPanel logoutItemPanel;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JPanel profileItemPanel;
+    private javax.swing.JPanel profileItemPanel1;
+    private javax.swing.JPanel profileItemPanel2;
     private javax.swing.JLabel profileLabel;
+    private javax.swing.JLabel profileLabel1;
+    private javax.swing.JLabel profileLabel2;
     private javax.swing.JPanel statisticsItemPanel;
     private javax.swing.JLabel statisticsLabel;
+    private javax.swing.JPanel suppliesItemPanel;
+    private javax.swing.JLabel suppliesLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package Supplies;
 
 import java.util.Date;
@@ -48,7 +45,7 @@ public class H_Rec extends javax.swing.JPanel {
         price.setText(Float.toString(pric));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel1.setText("11/11/2003");
+        jLabel1.setText(datee.toString());
 
         OrderType.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         OrderType.setText(type);

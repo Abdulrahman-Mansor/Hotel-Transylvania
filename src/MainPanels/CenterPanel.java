@@ -32,6 +32,7 @@ public class CenterPanel extends javax.swing.JPanel {
         }
         this.add(new ServicesPanel(), "2");
         this.add(new BillPanel(), "3");
+        this.add(new Supplies.Add_Supplies(), "4");
         card.show(this, "0");
 
     }

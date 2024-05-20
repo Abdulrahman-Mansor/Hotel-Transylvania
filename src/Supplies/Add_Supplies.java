@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author AhmedMagedMohamedHas
  */
-public class Add_Supplies extends javax.swing.JPanel {
+public class Add_Supplies extends MainPanels.CenterPanelChildForm {
 
     /**
      * Creates new form Add_Supplies

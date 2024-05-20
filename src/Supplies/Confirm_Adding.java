@@ -64,6 +64,11 @@ public class Confirm_Adding extends javax.swing.JFrame {
                 button1MouseClicked(evt);
             }
         });
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         button2.setBackground(new java.awt.Color(204, 0, 0));
         button2.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,7 +178,7 @@ public class Confirm_Adding extends javax.swing.JFrame {
                             "    (\n" +
                             "        '"+userr+"',\n" +
                             "        "+price+",\n" +
-                            "        '"+LocalDate.now()+"',\n" +
+                            "        '"+java.sql.Date.valueOf(LocalDate.now())+"',\n" +
                             "        '"+typ+"'\n" +
                             "    );";
         try{
@@ -196,6 +201,10 @@ public class Confirm_Adding extends javax.swing.JFrame {
             Logger.getLogger(Confirm_Adding.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button1MouseClicked
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button1ActionPerformed
 
     /**
      * @param args the command line arguments
