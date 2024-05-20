@@ -1,6 +1,7 @@
 
 package MainPanels;
 
+import Bill.BillPanel;
 import Employee.EmployeeRec;
 import java.awt.CardLayout;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class CenterPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(CenterPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.add(new CenterPanelChildForm(), "2");
+        this.add(new BillPanel(), "2");
         this.add(new CenterPanelChildForm(), "3");
         card.show(this, "0");
 
