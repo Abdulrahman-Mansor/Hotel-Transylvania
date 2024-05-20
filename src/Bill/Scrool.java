@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -34,13 +35,21 @@ public class Scrool extends javax.swing.JPanel {
     private JScrollPane jScrollPane1;
     public Scrool() {
         initComponents();
+        Price.setText("");
     }
-    public void change(int clientid) {
+    public void clear(){
         Scroll.removeAll();
         Scroll.revalidate();
         Scroll.repaint();
+        Price.setText("");
+    }
+    public double change(int clientid,float roomPrice, long days) {
+        Scroll.removeAll();
+        Scroll.revalidate();
+        Scroll.repaint();
+        Price.setText(String.valueOf(roomPrice * days));
         System.out.println("we entered the change funciton");
-        Scroll.setPreferredSize(new Dimension(590, 280));
+        Scroll.setPreferredSize(new Dimension(512, 243));
         jScrollPane1 = new raven.scroll.win11.ScrollPaneWin11();
         String sqlqurey;
         sqlqurey = "SELECT askFor.serviceType, askFor.SName, Service.price\n" +
@@ -58,19 +67,21 @@ public class Scrool extends javax.swing.JPanel {
         }
         innerPanel = new JPanel();
         innerPanel.setLayout(new BoxLayout(innerPanel, BoxLayout.Y_AXIS));
+        double servicesSum = 0f;
         try {
             while (rs.next()) {
                 System.out.println("we enterd the next");
                 String SName = rs.getString("SName");
                 String type = rs.getString("ServiceType");
                 float price = rs.getFloat("price");
+                servicesSum += price;
                 Bill.Record r = new Bill.Record(SName+" "+type,Float.toString(price));
-                r.setPreferredSize(new Dimension(830, 50));
+                r.setPreferredSize(new Dimension(512, 45));
                 innerPanel.add(r);
                 JPanel subPanel = new JPanel();
-                subPanel.setPreferredSize(new Dimension(460, 55));
-                subPanel.setMaximumSize(new Dimension(460, 55));
-                subPanel.setMinimumSize(new Dimension(460, 55));
+                subPanel.setPreferredSize(new Dimension(512, 5));
+                subPanel.setMaximumSize(new Dimension(512, 5));
+                subPanel.setMinimumSize(new Dimension(512, 5));
                 subPanel.setBackground(new Color(135,135,135));
                 innerPanel.add(subPanel);
                 System.out.println(SName);
@@ -79,10 +90,14 @@ public class Scrool extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(E_Scroll.class.getName()).log(Level.SEVERE, null, ex);
         }
+        innerPanel.revalidate();
+        innerPanel.repaint();
+        this.revalidate();
+        this.repaint();
         innerPanel.setBackground(new Color(255,255,255));
         jScrollPane1.setViewportView(innerPanel);
         Scroll.add(jScrollPane1, BorderLayout.CENTER);
-
+        return servicesSum + (roomPrice * days);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,19 +108,25 @@ public class Scrool extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new MainPanels.CenterPanelChildForm();
         jLabel1 = new javax.swing.JLabel();
         Price = new javax.swing.JLabel();
         Scroll = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(490, 324));
         setMinimumSize(new java.awt.Dimension(490, 324));
         setPreferredSize(new java.awt.Dimension(490, 324));
 
+        jPanel1.setBackground(new java.awt.Color(27, 132, 182));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Room Price: ");
 
+        Price.setForeground(new java.awt.Color(255, 255, 255));
         Price.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -113,54 +134,61 @@ public class Scrool extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(62, 62, 62)
                 .addComponent(jLabel1)
-                .addGap(69, 69, 69)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Price, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addGap(77, 77, 77))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(Price))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout ScrollLayout = new javax.swing.GroupLayout(Scroll);
-        Scroll.setLayout(ScrollLayout);
-        ScrollLayout.setHorizontalGroup(
-            ScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        ScrollLayout.setVerticalGroup(
-            ScrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
-        );
+        Scroll.setBackground(new java.awt.Color(255, 255, 255));
+        Scroll.setPreferredSize(new java.awt.Dimension(243, 370));
+        Scroll.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setText("Service");
+
+        jLabel3.setText("Price");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap()
+                .addComponent(Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(99, 99, 99)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(99, 99, 99))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Scroll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -170,6 +198,7 @@ public class Scrool extends javax.swing.JPanel {
     private javax.swing.JPanel Scroll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

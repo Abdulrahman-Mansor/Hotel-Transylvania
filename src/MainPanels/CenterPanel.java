@@ -24,14 +24,14 @@ public class CenterPanel extends javax.swing.JPanel {
         card = new CardLayout();
         this.setLayout(card);
 //        this.add(new CenterPanelChildForm(),"1");
-        this.add(new ServicesPanel(), "0");
+        this.add(new Check_IN.CheckIn(), "0");
         try {
             this.add(new EmployeeRec(), "1");
         } catch (SQLException ex) {
             Logger.getLogger(CenterPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.add(new BillPanel(), "2");
-        this.add(new CenterPanelChildForm(), "3");
+        this.add(new ServicesPanel(), "2");
+        this.add(new BillPanel(), "3");
         card.show(this, "0");
 
     }

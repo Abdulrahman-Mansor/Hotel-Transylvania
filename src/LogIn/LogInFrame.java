@@ -97,9 +97,9 @@ public class LogInFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,7 +116,7 @@ public class LogInFrame extends javax.swing.JFrame {
         String sqlQuery = "SELECT * FROM Admin where UserName ='" + username +"' AND Password ='" + password + "'";
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://Mansour:1433;databaseName=Hotel Transylvania DB;encrypt=true;trustServerCertificate=true", "Mans", "12345");
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
             PreparedStatement pst = conn.prepareStatement(sqlQuery);
             ResultSet result = pst.executeQuery();
             if(!result.next()){
@@ -131,9 +131,7 @@ public class LogInFrame extends javax.swing.JFrame {
             System.out.println("Class sql server not found");
             JOptionPane.showMessageDialog(null, ex);
         }
-        
-        
-        
+
     }//GEN-LAST:event_loginButtonActionPerformed
 
     public static void main(String args[]) {

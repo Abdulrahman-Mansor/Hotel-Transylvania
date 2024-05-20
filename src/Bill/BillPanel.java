@@ -4,9 +4,17 @@
  */
 package Bill;
 
+import LogIn.MessageDialog;
 import MainPanels.CenterPanelChildForm;
+import java.awt.Color;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +32,8 @@ public class BillPanel extends CenterPanelChildForm {
     private String clientId,roomNumber;
     public BillPanel() {
         initComponents();
+        confirmButton.setBackground(new Color(27,132,182));
+        cancelButton.setBackground(Color.gray);
         ResultSet rs ;
         String sqlqurey = "SELECT * FROM dbo.Room WHERE Status = "+1+" ";
         try{
@@ -53,11 +63,12 @@ public class BillPanel extends CenterPanelChildForm {
     private void initComponents() {
 
         roomNumberCombo = new combobox.Combobox();
-        jPanel3 = new javax.swing.JPanel();
-        scrool1 = new Bill.Scrool();
         clientInfo1 = new services.ClientInfo();
-
-        setBackground(new java.awt.Color(255, 255, 255));
+        scrool2 = new Bill.Scrool();
+        jLabel1 = new javax.swing.JLabel();
+        totalPaymentLabel = new javax.swing.JLabel();
+        confirmButton = new button.Button();
+        cancelButton = new button.Button();
 
         roomNumberCombo.setLabeText("Select Room");
         roomNumberCombo.addItemListener(new java.awt.event.ItemListener() {
@@ -71,51 +82,78 @@ public class BillPanel extends CenterPanelChildForm {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
-                .addComponent(scrool1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(scrool1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        scrool2.setBackground(new java.awt.Color(255, 255, 255));
+        scrool2.setPreferredSize(new java.awt.Dimension(512, 370));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Total Payment");
+
+        totalPaymentLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        totalPaymentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        confirmButton.setForeground(new java.awt.Color(255, 255, 255));
+        confirmButton.setText("Confirm");
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmButtonActionPerformed(evt);
+            }
+        });
+
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
-                .addComponent(roomNumberCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(clientInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(totalPaymentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(614, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(clientInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(roomNumberCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scrool2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
+                        .addComponent(roomNumberCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
                         .addComponent(clientInfo1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(roomNumberCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(scrool2, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalPaymentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(76, 76, 76))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -130,23 +168,31 @@ public class BillPanel extends CenterPanelChildForm {
         if(key){
             String selRoom = (String)roomNumberCombo.getSelectedItem();
             try{
-                result = con.prepareStatement("SELECT Client.*, Room.*\n"
+                
+                result = con.prepareStatement("SELECT Client.*, Room.*, Check_In_Out.StartDate\n"
                         + "FROM Client\n"
                         + "JOIN Check_In_Out ON Client.ClientID = Check_In_Out.clientID\n"
                         + "JOIN Room ON Check_In_Out.Room_N = Room.Room_Number\n"
                         + "WHERE Room.Room_Number = " + selRoom +"\n"
                         + "ORDER BY Check_In_Out.StartDate DESC").executeQuery();
+                float price = 0f;
+                long days = 1L;
                 while(result.next()){
                     String gen = "Male";
                     if(result.getString("Gender").equals("0"))
                         gen = "Female";
                     this.clientId = result.getString("ClientID");
                     this.roomNumber = result.getString("Room_Number");
+                    LocalDate outDate = LocalDate.now();
+                    java.sql.Date tempDate = result.getDate("StartDate");
+                    LocalDate inDate = tempDate.toLocalDate();
+                    days = ChronoUnit.DAYS.between(inDate, outDate);
+                    price = result.getFloat("Price_per_day");
                     clientInfo1.setInfo(this.clientId, result.getString("Name"), result.getString("Nationality"), result.getString("Phone"), gen);
                     break;
                 }
-                System.out.println(clientId);
-                scrool1.change(Integer.parseInt(clientId));
+                double totalPayment = scrool2.change(Integer.parseInt(clientId),price, days);
+                totalPaymentLabel.setText(Double.toString(totalPayment));
             }
             catch(Exception ex){
                 System.out.println(ex);
@@ -160,11 +206,36 @@ public class BillPanel extends CenterPanelChildForm {
         
     }//GEN-LAST:event_roomNumberComboActionPerformed
 
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        clientInfo1.setInfo("", "", "", "", "");
+        this.clientId = this.roomNumber = null;
+        roomNumberCombo.setSelectedIndex(-1);
+        scrool2.clear();
+        totalPaymentLabel.setText("");
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+       String query = "UPDATE Room\n"
+               + "SET Status= 0\n"
+               + "WHERE\n"
+               + "    Room_Number =" + this.roomNumber;
+        try {
+            con.prepareStatement(query).executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BillPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        new MessageDialog("Check out Confirmed",this).setVisible(true);
+        cancelButton.doClick();
+    }//GEN-LAST:event_confirmButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private button.Button cancelButton;
     private services.ClientInfo clientInfo1;
-    private javax.swing.JPanel jPanel3;
+    private button.Button confirmButton;
+    private javax.swing.JLabel jLabel1;
     private combobox.Combobox roomNumberCombo;
-    private Bill.Scrool scrool1;
+    private Bill.Scrool scrool2;
+    private javax.swing.JLabel totalPaymentLabel;
     // End of variables declaration//GEN-END:variables
 }

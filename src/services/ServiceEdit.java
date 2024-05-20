@@ -2,27 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Check_Out;
+package services;
 
-import java.awt.Color;
+import java.awt.CardLayout;
 
 /**
  *
- * @author ZBOOK
+ * @author Mansour
  */
-public class CheckOut extends javax.swing.JPanel {
+public class ServiceEdit extends javax.swing.JPanel {
 
     /**
-     * Creates new form CheckOut
+     * Creates new form ServiceEdit
      */
-    public CheckOut() {
+    public ServiceEdit() {
         initComponents();
-        this.setBackground(Color.white);
-        init();
-    }
-    
-    void init() {
-        
     }
 
     /**
@@ -34,15 +28,17 @@ public class CheckOut extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setBackground(new java.awt.Color(255, 102, 102));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 353, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGap(0, 291, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
