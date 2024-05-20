@@ -31,8 +31,6 @@ public class Companion extends javax.swing.JPanel {
         this.setBackground(Color.white);
         init();
     }
-    JFrame frame;
-    int number;
     
     private void init() {
         NameText.setLabelText("Name");
@@ -41,8 +39,8 @@ public class Companion extends javax.swing.JPanel {
         jButton1.setFocusable(false);
         jButton1.setBackground(new Color(215, 209, 209));
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(radioButtonCustom1);
-        buttonGroup.add(radioButtonCustom2);  
+        buttonGroup.add(MaleRadioButton);
+        buttonGroup.add(FemaleRadioButton);  
         
         
         String[] countries = Locale.getISOCountries();
@@ -51,10 +49,6 @@ public class Companion extends javax.swing.JPanel {
             Locale locale = new Locale("", countries[i]);
             NationalityComboBox.addItem(locale.getDisplayCountry());
         }
-    }
-    public void pass(int num, JFrame f) {
-        number = num;
-        frame = f;
     }
     
 
@@ -69,14 +63,14 @@ public class Companion extends javax.swing.JPanel {
 
         NameText = new textfield.TextField();
         PhoneText = new textfield.TextField();
-        radioButtonCustom1 = new radio_button.RadioButtonCustom();
-        radioButtonCustom2 = new radio_button.RadioButtonCustom();
+        MaleRadioButton = new radio_button.RadioButtonCustom();
+        FemaleRadioButton = new radio_button.RadioButtonCustom();
         jButton1 = new javax.swing.JButton();
         NationalityComboBox = new combo_suggestion.ComboBoxSuggestion();
 
-        radioButtonCustom1.setText("Male");
+        MaleRadioButton.setText("Male");
 
-        radioButtonCustom2.setText("Female");
+        FemaleRadioButton.setText("Female");
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -97,9 +91,9 @@ public class Companion extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(MaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(FemaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(82, 82, 82))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -118,8 +112,8 @@ public class Companion extends javax.swing.JPanel {
                     .addComponent(PhoneText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FemaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(NationalityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76)
                 .addComponent(jButton1)
@@ -143,7 +137,7 @@ public class Companion extends javax.swing.JPanel {
                 tx[i].setLineColor(new Color(3, 155, 216));
             }
             if(i == tx.length - 1) {
-                if(!(radioButtonCustom1.isSelected() || radioButtonCustom2.isSelected())) {
+                if(!(MaleRadioButton.isSelected() || FemaleRadioButton.isSelected())) {
                     JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
@@ -167,15 +161,15 @@ public class Companion extends javax.swing.JPanel {
             if(rs.next()) {
                 clientId = rs.getInt("LastClientID");
             }
-            // insert into client table
+            // insert into Companion table
             PreparedStatement pstCompanion = conn.prepareStatement("INSERT INTO Companion (ClientID, Nationality, Phone, Name, Gender) VALUES (?, ?, ?, ?, ?)");
             pstCompanion.setInt(1, clientId);
             pstCompanion.setString(2, (String) NationalityComboBox.getSelectedItem());
             pstCompanion.setString(3, PhoneText.getText());
             pstCompanion.setString(4, NameText.getText());
-            if(radioButtonCustom1.isSelected())
+            if(MaleRadioButton.isSelected())
                 pstCompanion.setBoolean(5, true);
-            else if(radioButtonCustom2.isSelected())
+            else if(FemaleRadioButton.isSelected())
                 pstCompanion.setBoolean(5, false);
             
             
@@ -185,8 +179,8 @@ public class Companion extends javax.swing.JPanel {
             NameText.setText("");
             PhoneText.setText("");
             NationalityComboBox.setSelectedIndex(0);
-            radioButtonCustom1.setSelected(false);
-            radioButtonCustom2.setSelected(false);
+            MaleRadioButton.setSelected(false);
+            FemaleRadioButton.setSelected(false);
             this.setVisible(false);
             
         }
@@ -198,11 +192,11 @@ public class Companion extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private radio_button.RadioButtonCustom FemaleRadioButton;
+    private radio_button.RadioButtonCustom MaleRadioButton;
     private textfield.TextField NameText;
     private combo_suggestion.ComboBoxSuggestion NationalityComboBox;
     private textfield.TextField PhoneText;
     private javax.swing.JButton jButton1;
-    private radio_button.RadioButtonCustom radioButtonCustom1;
-    private radio_button.RadioButtonCustom radioButtonCustom2;
     // End of variables declaration//GEN-END:variables
 }

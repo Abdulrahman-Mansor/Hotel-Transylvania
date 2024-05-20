@@ -280,9 +280,6 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         int i = 0;
         for(; i < check.length; i++) {
             if(check[i].isEmpty()) {
-                if(i == 3) {
-                    continue;
-                }
                 JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);  
                 ch[i].setLineColor(Color.red);
                 ch[i].requestFocus();
@@ -290,21 +287,12 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
             }
             else {
                 ch[i].setLineColor(new Color(3, 155, 216));
-                if(i == 2 || i == 3) {
+                if(i == 2) {
                 String format = "yyyy-MM-dd";
                 SimpleDateFormat sdf = new SimpleDateFormat(format);
                 try {
                     // Parse the date string
                     Date date = sdf.parse(check[i]);
-                    if(i == 3) {
-                        Date startDate = sdf.parse(check[2]);
-                        Date endDate = sdf.parse(check[3]);
-                            
-                        if(endDate.before(startDate)) {
-                            JOptionPane.showMessageDialog(this, "Review the Date", "Error", JOptionPane.ERROR_MESSAGE);
-                            break;
-                        }
-                    }
                     // If parsing successful, the date string is valid
                         
                 } catch (ParseException e) {
@@ -383,6 +371,7 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                         java.util.Date checkInDate = sdf.parse(CheckInTextField.getText());
                         java.sql.Date sqlCheckInDate = new java.sql.Date(checkInDate.getTime());
                         pstCheckInOut.setDate(3, sqlCheckInDate);
+                        pstCheckInOut.setNull(4, java.sql.Types.DATE);
 
                         
             
@@ -442,34 +431,22 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         int i = 0;
         for(; i < check.length; i++) {
             if(check[i].isEmpty()) {
-                if(i == 3) {
-                    continue;
-                }
-               JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);  
-               ch[i].setLineColor(Color.red);
-               ch[i].requestFocus();
-               break;
+                JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);  
+                ch[i].setLineColor(Color.red);
+                ch[i].requestFocus();
+                break;
             }
             else {
                 ch[i].setLineColor(new Color(3, 155, 216));
-                if(i == 2 || i == 3) {
-                    String format = "yyyy-MM-dd";
-                    SimpleDateFormat sdf = new SimpleDateFormat(format);
-                    try {
-                        // Parse the date string
-                        Date date = sdf.parse(check[i]);
-                        if(i == 3) {
-                            Date startDate = sdf.parse(check[2]);
-                            Date endDate = sdf.parse(check[3]);
-                            
-                            if(endDate.before(startDate)) {
-                                JOptionPane.showMessageDialog(this, "Review the Date", "Error", JOptionPane.ERROR_MESSAGE);
-                                break;
-                            }
-                        }
-                        // If parsing successful, the date string is valid
+                if(i == 2) {
+                String format = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(format);
+                try {
+                    // Parse the date string
+                    Date date = sdf.parse(check[i]);
+                    // If parsing successful, the date string is valid
                         
-                    } catch (ParseException e) {
+                } catch (ParseException e) {
                         // Parsing failed, date string is not valid
                         JOptionPane.showMessageDialog(this, "Wrong in the Date", "Error", JOptionPane.ERROR_MESSAGE);  
                         ch[i].setLineColor(Color.red);
@@ -478,101 +455,89 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                     }                    
                 }
             }
-            if(i == check.length - 1) {
-                if(!(MaleRadioButton.isSelected() || FemaleRadioButton.isSelected())) {
-                    JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);
-                    break;
-                }
-                    if(!(YesCompanionRadioButton.isSelected() || NoCompanionRadioButton.isSelected())) {
+                if(i == check.length - 1) {
+                    if(!(MaleRadioButton.isSelected() || FemaleRadioButton.isSelected())) {
                         JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);
                         break;
-                    }                 
-        }                      
-        }
-        int j = 0;
-        if(i == check.length){
-            for(j = 0; j < comb.length; j++) {
-                if(comb[j].getSelectedItem() == "") {
-                    JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);  
-                    comb[j].setLineColor(Color.red);
-                    comb[j].requestFocus();  
-                    break;
-                }
-                else {
-                    comb[j].setLineColor(new Color(3, 155, 216));
-                }      
-                 if(j == comb.length - 1) {
-                    if(combSug[0].getSelectedItem() == "Nationality") {
-                        JOptionPane.showMessageDialog(this, "Fill in Nationality", "Error", JOptionPane.ERROR_MESSAGE); 
+                    }                     
+                }                      
+            }
+            int j = 0;
+            if(i == check.length){
+                for(j = 0; j < comb.length; j++) {
+                    if(comb[j].getSelectedItem() == "") {
+                        JOptionPane.showMessageDialog(this, "Fill in Information", "Error", JOptionPane.ERROR_MESSAGE);  
+                        comb[j].setLineColor(Color.red);
+                        comb[j].requestFocus();  
                         break;
-                    }                
-            }
-            }
-        }
-        
+                    }
+                    else {
+                        comb[j].setLineColor(new Color(3, 155, 216));
+                    }      
+                    if(j == comb.length - 1) {
+                        if(combSug[0].getSelectedItem() == "Nationality") {
+                            JOptionPane.showMessageDialog(this, "Fill in Nationality", "Error", JOptionPane.ERROR_MESSAGE); 
+                            break;
+                        }                
+                    }
+                }
+            }        
         ///////////////////////////////////////////////////////////////////////////////////////
        if(j == comb.length) {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
-            // insert into client table
-            PreparedStatement pstClient = conn.prepareStatement("INSERT INTO Client (Nationality, Phone, Name, Gender) VALUES (?, ?, ?, ?)");
-            pstClient.setString(1, (String) comboBoxSuggestion1.getSelectedItem());
-            pstClient.setString(2, PhoneTextField.getText());
-            pstClient.setString(3, NameTextField.getText());
-            if(MaleRadioButton.isSelected())
-                pstClient.setBoolean(4, true);
-            else if(FemaleRadioButton.isSelected())
-                pstClient.setBoolean(4, false);
+                        //This line ensures that the SQL Server JDBC driver is loaded.
+                        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+                        Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
+                        // insert into client table
+                        PreparedStatement pstClient = conn.prepareStatement("INSERT INTO Client (Nationality, Phone, Name, Gender) VALUES (?, ?, ?, ?)");
+                        pstClient.setString(1, (String) comboBoxSuggestion1.getSelectedItem());
+                        pstClient.setString(2, PhoneTextField.getText());
+                        pstClient.setString(3, NameTextField.getText());
+                        if(MaleRadioButton.isSelected())
+                            pstClient.setBoolean(4, true);
+                        else if(FemaleRadioButton.isSelected())
+                            pstClient.setBoolean(4, false);
             
             
-            pstClient.executeUpdate();
-            
-            // insert into room table
-            PreparedStatement pstRoom = conn.prepareStatement("INSERT INTO Room (Class, Beds_No, Price_per_day, Status, Room_Number) VALUES (?, ?, ?, ?, ?)");
-            pstRoom.setString(1, (String) ClassComboBox.getSelectedItem());
-            pstRoom.setInt(2,  Integer.parseInt((String) NumOfBedsCombo.getSelectedItem())); //getSelectedItem() method returns an Object
-            pstRoom.setBoolean(4, true); // Full
-            pstRoom.setInt(5,  Integer.parseInt((String) RoomNumComboBox.getSelectedItem()));
-            
-            pstRoom.executeUpdate();
+                        pstClient.executeUpdate();
             
             
-            // Get ClientID From Client table
-            PreparedStatement pst = conn.prepareStatement("SELECT MAX(ClientID) AS LastClientID FROM Client");
+            
+                        // Get ClientID From Client table
+                        PreparedStatement pst = conn.prepareStatement("SELECT MAX(ClientID) AS LastClientID FROM Client");
 
-            ResultSet rs = pst.executeQuery();
-            int clientId = 0;
-            if(rs.next()) {
-                clientId = rs.getInt("LastClientID");
-            }
+                        ResultSet rs = pst.executeQuery();
+                        int clientId = 0;
+                        if(rs.next()) {
+                           clientId = rs.getInt("LastClientID");
+                        }
             
-            // insert into check in out table
-            PreparedStatement pstCheckInOut = conn.prepareStatement("insert into Check_In_Out (clientID, Room_N, StartDate, EndDate) VALUES (?, ?, ?, ?)");
+                        // insert into check in out table
+                        PreparedStatement pstCheckInOut = conn.prepareStatement("insert into Check_In_Out (clientID, Room_N, StartDate, EndDate) VALUES (?, ?, ?, ?)");
             
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            pstCheckInOut.setInt(1, clientId);
-            pstCheckInOut.setInt(2, Integer.parseInt((String) RoomNumComboBox.getSelectedItem()));
-            // Convert java.util.Date to java.sql.Date
-            java.util.Date checkInDate = sdf.parse(CheckInTextField.getText());
-            java.sql.Date sqlCheckInDate = new java.sql.Date(checkInDate.getTime());
-            pstCheckInOut.setDate(3, sqlCheckInDate);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        pstCheckInOut.setInt(1, clientId);
+                        pstCheckInOut.setInt(2, Integer.parseInt((String) RoomNumComboBox.getSelectedItem()));
+                        // Convert java.util.Date to java.sql.Date
+                        java.util.Date checkInDate = sdf.parse(CheckInTextField.getText());
+                        java.sql.Date sqlCheckInDate = new java.sql.Date(checkInDate.getTime());
+                        pstCheckInOut.setDate(3, sqlCheckInDate);
+                        pstCheckInOut.setNull(4, java.sql.Types.DATE);
 
-
-            pstCheckInOut.executeUpdate();
+                        
             
-            new MessageDialog("Saved", this).setVisible(true);
-            NameTextField.setText("");
-            PhoneTextField.setText("");
-            comboBoxSuggestion1.setSelectedIndex(0);
-            MaleRadioButton.setSelected(false);
-            FemaleRadioButton.setSelected(false);   
-            NoCompanionRadioButton.setSelected(false);
-            YesCompanionRadioButton.setSelected(false);  
-            CheckInTextField.setText("");
-            ClassComboBox.setSelectedIndex(0);
-            RoomNumComboBox.setSelectedIndex(0);
-            NumOfBedsCombo.setSelectedIndex(0);
+                        pstCheckInOut.executeUpdate();
+                        NameTextField.setText("");
+                        PhoneTextField.setText("");
+                        comboBoxSuggestion1.setSelectedIndex(0);
+                        MaleRadioButton.setSelected(false);
+                        FemaleRadioButton.setSelected(false);   
+                        NoCompanionRadioButton.setSelected(false);
+                        YesCompanionRadioButton.setSelected(false);  
+                        CheckInTextField.setText("");
+                        ClassComboBox.setSelectedIndex(0);
+                        RoomNumComboBox.setSelectedIndex(0);
+                        NumOfBedsCombo.setSelectedIndex(0);
             
         }
         catch (Exception e) {

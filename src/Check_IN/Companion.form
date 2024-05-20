@@ -25,9 +25,9 @@
               <EmptySpace pref="117" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                      <Component id="MaleRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
+                      <Component id="FemaleRadioButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -53,8 +53,8 @@
               </Group>
               <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="radioButtonCustom1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="radioButtonCustom2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="MaleRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="FemaleRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="NationalityComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
@@ -69,12 +69,12 @@
     </Component>
     <Component class="textfield.TextField" name="PhoneText">
     </Component>
-    <Component class="radio_button.RadioButtonCustom" name="radioButtonCustom1">
+    <Component class="radio_button.RadioButtonCustom" name="MaleRadioButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Male"/>
       </Properties>
     </Component>
-    <Component class="radio_button.RadioButtonCustom" name="radioButtonCustom2">
+    <Component class="radio_button.RadioButtonCustom" name="FemaleRadioButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Female"/>
       </Properties>
