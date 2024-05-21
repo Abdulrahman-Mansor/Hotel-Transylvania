@@ -13,11 +13,14 @@ import java.sql.PreparedStatement;
 import combo_suggestion.ComboBoxSuggestion;
 import combobox.Combobox;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,6 +34,7 @@ import textfield.TextField;
 public class CheckIn extends MainPanels.CenterPanelChildForm {
 
     /** Creates new form CheckIn */
+    boolean key = false;
     public CheckIn() {
         initComponents();
         this.setBackground(Color.white);
@@ -70,8 +74,8 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
             rs = pst.executeQuery();
             while (rs.next()) {
                 RoomNumComboBox.addItem(rs.getString("Room_Number"));
-                NumOfBedsCombo.addItem(String.valueOf(rs.getFloat("Price_per_day")));
-                ClassComboBox.addItem(rs.getString("Class"));
+//                NumOfBedsCombo.addItem(String.valueOf(rs.getFloat("Price_per_day")));
+//                ClassComboBox.addItem(rs.getString("Class"));
             }
 
         } catch (Exception e) {
@@ -87,7 +91,8 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         ClassComboBox.setSelectedIndex(-1);
         RoomNumComboBox.setSelectedIndex(-1);
         NumOfBedsCombo.setSelectedIndex(-1);
-        
+        priceLabel.setText("");
+        key = true;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,6 +113,7 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         RoomNumComboBox = new combobox.Combobox();
         comboBoxSuggestion1 = new combo_suggestion.ComboBoxSuggestion();
         CancelButton = new javax.swing.JButton();
+        priceLabel = new javax.swing.JLabel();
 
         NameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,18 +183,22 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
             }
         });
 
+        priceLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(136, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(CheckInTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(NumOfBedsCombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RoomNumComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
+                .addGap(185, 185, 185)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(NameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CheckInTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(NumOfBedsCombo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(RoomNumComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(PhoneTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                     .addComponent(ClassComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
@@ -205,50 +215,57 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                             .addComponent(YesCompanionRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(203, 203, 203))
             .addGroup(layout.createSequentialGroup()
-                .addGap(375, 375, 375)
+                .addGap(394, 394, 394)
                 .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(CancelButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(419, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PhoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(RoomNumComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxSuggestion1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CheckInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NumOfBedsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(MaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(FemaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(PhoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(comboBoxSuggestion1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(ClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(MaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FemaleRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(YesCompanionRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(RoomNumComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(46, 46, 46)
+                                .addComponent(CheckInTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(NumOfBedsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(YesCompanionRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(NoCompanionRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(71, 71, 71)
+                        .addComponent(NoCompanionRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveButton)
                     .addComponent(CancelButton))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void NameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameTextFieldActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_NameTextFieldActionPerformed
 
     private void MaleRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaleRadioButtonActionPerformed
@@ -335,6 +352,7 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         ///////////////////////////////////////////////////////////////////////////////////////
             if(j == comb.length) {
                 try{
+                      
                         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                         Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
                         // insert into client table
@@ -372,7 +390,25 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                         java.sql.Date sqlCheckInDate = new java.sql.Date(checkInDate.getTime());
                         pstCheckInOut.setDate(3, sqlCheckInDate);
                         pstCheckInOut.setNull(4, java.sql.Types.DATE);
-
+                        String qu = "UPDATE Room\n"
+                            + "SET Status= 1\n"
+                            + "WHERE\n"
+                            + "    Room_Number =" + (String) (RoomNumComboBox.getSelectedItem());
+                    try {
+                        con.prepareStatement(qu).executeUpdate();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    RoomNumComboBox.removeAllItems();
+                    try {
+                        ResultSet rrrs = con.prepareStatement("SELECT * FROM Room WHERE Status =" + 0).executeQuery();
+                        while (rrrs.next()) {
+                            RoomNumComboBox.addItem(rrrs.getString("Room_Number"));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    RoomNumComboBox.setSelectedIndex(-1);
                         
             
                         pstCheckInOut.executeUpdate();
@@ -384,9 +420,9 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                         NoCompanionRadioButton.setSelected(false);
                         YesCompanionRadioButton.setSelected(false);  
                         CheckInTextField.setText("");
-                        ClassComboBox.setSelectedIndex(0);
-                        RoomNumComboBox.setSelectedIndex(0);
-                        NumOfBedsCombo.setSelectedIndex(0);
+                        ClassComboBox.setSelectedIndex(-1);
+                        RoomNumComboBox.setSelectedIndex(-1);
+                        NumOfBedsCombo.setSelectedIndex(-1);
                         j++;
                             
                     }
@@ -485,6 +521,26 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
         ///////////////////////////////////////////////////////////////////////////////////////
        if(j == comb.length) {
         try {
+                        String roomNum = (String)(RoomNumComboBox.getSelectedItem());
+                        String qu = "UPDATE Room\n"
+                        + "SET Status= 1\n"
+                        + "WHERE\n"
+                        + "    Room_Number =" + roomNum;
+                        try {
+                            con.prepareStatement(qu).executeUpdate();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        RoomNumComboBox.removeAllItems();
+                        try {
+                            ResultSet rrrs = con.prepareStatement("SELECT * FROM Room WHERE Status =" + 0).executeQuery();
+                            while (rrrs.next()) {
+                                RoomNumComboBox.addItem(rrrs.getString("Room_Number"));
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        RoomNumComboBox.setSelectedIndex(-1);
                         //This line ensures that the SQL Server JDBC driver is loaded.
                         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                         Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Hotel;encrypt=true;trustServerCertificate=true", "Admin", "1234");
@@ -517,7 +573,7 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
             
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                         pstCheckInOut.setInt(1, clientId);
-                        pstCheckInOut.setInt(2, Integer.parseInt((String) RoomNumComboBox.getSelectedItem()));
+                        pstCheckInOut.setInt(2, Integer.parseInt(roomNum));
                         // Convert java.util.Date to java.sql.Date
                         java.util.Date checkInDate = sdf.parse(CheckInTextField.getText());
                         java.sql.Date sqlCheckInDate = new java.sql.Date(checkInDate.getTime());
@@ -535,9 +591,6 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
                         NoCompanionRadioButton.setSelected(false);
                         YesCompanionRadioButton.setSelected(false);  
                         CheckInTextField.setText("");
-                        ClassComboBox.setSelectedIndex(0);
-                        RoomNumComboBox.setSelectedIndex(0);
-                        NumOfBedsCombo.setSelectedIndex(0);
             
         }
         catch (Exception e) {
@@ -549,7 +602,22 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void RoomNumComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomNumComboBoxActionPerformed
-        // TODO add your handling code here:
+        if(key){
+            priceLabel.setText("");
+            NumOfBedsCombo.removeAllItems();
+            ClassComboBox.removeAllItems();
+            String room = (String)RoomNumComboBox.getSelectedItem();
+            try {
+               ResultSet rs = con.prepareStatement("SELECT * FROM Room WHERE Room_Number =" + room).executeQuery();
+              while(rs.next()){
+                  NumOfBedsCombo.addItem(rs.getString("Beds_No"));
+                  ClassComboBox.addItem(rs.getString("Class"));
+                  priceLabel.setText(rs.getString("Price_per_day"));
+              }
+            } catch (SQLException ex) {
+                Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_RoomNumComboBoxActionPerformed
 
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
@@ -563,8 +631,12 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
             YesCompanionRadioButton.setSelected(false);  
             CheckInTextField.setText("");
             ClassComboBox.setSelectedIndex(0);
-            RoomNumComboBox.setSelectedIndex(0);
+            RoomNumComboBox.setSelectedIndex(-1);
             NumOfBedsCombo.setSelectedIndex(0);
+            
+            priceLabel.setText("");
+            NumOfBedsCombo.removeAllItems();
+            ClassComboBox.removeAllItems();
     }//GEN-LAST:event_CancelButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -583,6 +655,7 @@ public class CheckIn extends MainPanels.CenterPanelChildForm {
     private combo_suggestion.ComboBoxSuggestion comboBoxSuggestion1;
     private combo_suggestion.ComboSuggestionUI comboSuggestionUI1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel priceLabel;
     // End of variables declaration//GEN-END:variables
 
 }

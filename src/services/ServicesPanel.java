@@ -44,7 +44,7 @@ public class ServicesPanel extends CenterPanelChildForm {
             System.out.println(ex);
         }
         try {
-            result = conn.prepareStatement("SELECT Room_Number FROM Room").executeQuery();
+            result = conn.prepareStatement("SELECT Room_Number FROM Room Where Status = " + 1).executeQuery();
             while (result.next()) {
                 String s = result.getString("Room_Number");
                 roomNumberCombo.addItem(s);
